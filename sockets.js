@@ -44,13 +44,13 @@ module.exports.listen = function(app){
       })
 
       // Answer
-      socket.on('answer', function(answer){
+      socket.on('answer', function(time){
         // add the entry
         socket.get('uuid', function(err, uuid){
-          game.addAnswer(uuid, answer, function(err, res){
+          game.addAnswer(uuid, time, function(err, res){
             if (err) { socket.emit("alert", err) }
             if(res) { io.sockets.emit("game", res ) }
-          })  
+          })
         })
         
       })
@@ -78,8 +78,8 @@ module.exports.listen = function(app){
     game.eventEmitter.on('state', function(res) {
       io.sockets.emit("game", res )
       if(res.state == 'ended') {
-        console.log("sending answers", game.getAnswers())
-        io.sockets.emit('answers', game.getAnswers())
+        console.log("sending winner", game.getWinner())
+        io.sockets.emit('winner', game.getWinner())
     }
     });
     return io

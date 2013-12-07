@@ -10,7 +10,7 @@ var Player = React.createClass({
 		if(this.props.gameState == "active" && this.props.player.answer != null)
 			classes="warning"
 		if(this.props.gameState == "ended" && this.props.player.answer )
-			if(this.props.player.answer == this.props.correctAnswer)
+			if(this.props.player.id == this.props.winner.id)
 				classes="success";
 			else
 				classes="danger";
@@ -29,8 +29,8 @@ var GameComponent = React.createClass({
 	getInitialState: function(){
 		return {
 	        title:null
+	        , colors:["#FFF"]
 	        , round:0
-	        , correctAnswer:null
 	        , answers:[]
 	        , now:0
 	        , state:"ended"
@@ -62,13 +62,11 @@ var GameComponent = React.createClass({
 			return (<Player 
 				player={player} 
 				gameState={self.state.state} 
-				correctAnswer={self.state.correctAnswer} 
+				winner = {self.state.winner}
 				count={++count}/>);
 		})
 
 		var next = (this.state.state == 'ended') ? <button id="begin-btn" class="btn btn-large btn-primary">Next</button> : <button id="begin-btn" class="btn btn-large btn-primary" style={{display:'none'}}>Next</button>;
-		var info = (this.state.state != 'ended') ? <div class="div-info alert alert-info">This question is worth {percent*10} points.</div> : "";
-		var answer = (this.state.state == 'ended') ? <div class="div-info alert alert-info"> {this.state.correctAnswer}</div> : "";
 
 		if(this.state.state == 'prep') this.state.alert = null;
 		var alert =  (this.state.alert) ? <div class="alert alert-dismissable alert-danger"> {this.state.alert}</div> : "";
@@ -81,7 +79,17 @@ var GameComponent = React.createClass({
 			percent = 0;
 		}
 		var barStyle = {width:percent + "%"};
+
 		var hideAnswers = (this.state.state != 'active') ? {display:'none'}:{};
+		var currentColorIndex = parseInt((timestamp - this.state.begin) / this.state.timePerColor);
+		if(currentColorIndex >= this.state.colors.length) currentColorIndex = this.state.colors.length-1;
+		if(currentColorIndex < 0) currentColorIndex = 0;
+		var currentColor = this.state.colors[currentColorIndex];
+		var correctColor = this.state.colors[this.state.colors.length-1];
+
+		var info = (this.state.state != 'ended') ? <div class="div-info alert alert-info">Begin: {this.state.begin} End: {this.state.end} Length: {this.state.colors.length} </div> : "";
+		
+		var diff = timestamp - (this.state.begin + ((this.state.colors.length-1) * this.state.timePerColor )) ;
 
 		return (
 			<div class="row">
@@ -103,15 +111,13 @@ var GameComponent = React.createClass({
 				<div class="col-md-9">
 					<div class="jumbotron">
 						<h1>
-							Question {this.state.round}
+							Round {this.state.round}
 						</h1>
 						<p class="title">
-							{this.state.title}
+							Match this color {this.state.colors[this.state.colors.length-1]}
 						</p>
-						<div class="progress progress-striped" id="timer">
-						  	<div class="progress-bar progress-bar-info" style={barStyle}></div>
-						</div>
-						{answer}
+						<div style={{background: correctColor, width:200, height:200}}></div>
+						<div style={{background: currentColor, width:200, height:200}}></div>
 						{next}
 					</div>
 					
@@ -120,10 +126,8 @@ var GameComponent = React.createClass({
 					{alert}
 					
 					<div class="answers" style={hideAnswers}>
-						<a class="btn btn-block btn-large btn-primary answer-btn">{this.state.answers[0]}</a>
-						<a class="btn btn-block btn-large btn-danger answer-btn">{this.state.answers[1]}</a>
-						<a class="btn btn-block btn-large btn-warning answer-btn">{this.state.answers[2]}</a>
-						<a class="btn btn-block btn-large btn-success answer-btn">{this.state.answers[3]}</a>
+						<a class="btn btn-block btn-large btn-primary answer-btn">NOW</a>
+						<input id="answer-time" type="hidden" value={diff}></input>
 					</div>
 				</div>
 			</div>
@@ -156,9 +160,9 @@ setInterval(function() {
     	$(".username").text(playerObj.name)
     });
     
-    $('.answer-btn').click(function(){
-		var val = $(this).text();
-		console.log("answering", val)
+    $('.answer-btn').mousedown(function(){
+		var val = $('#answer-time').val();
+    	console.log("answering", val)
 		if(val !== ''){
 			// console.log('test');
 			socket.emit('answer', val);
