@@ -6,9 +6,11 @@ var EventEmitter = require('events').EventEmitter;
 exports.eventEmitter = new EventEmitter();
 
 var prepTime = 2 * 1000;
-var roundTime = 10 * 1000;
-var timePerColor = 800;
-var endTimeBuffer = 1000;
+var roundTime;
+var timePerColor = 80;
+var minColors = 40;
+var maxColors = 200;
+var endTimeBuffer = 3000;
 
 var game = {
     title:null
@@ -93,7 +95,7 @@ newRound = function(cb){
 
     var remainingColors = _.without(colorsArray, game.colors[0]);
 
-    var stack  = _.random(3,7);
+    var stack  = _.random(minColors,maxColors);
     for(var i=0; i< stack; i++){
         game.colors.unshift( remainingColors[_.random(0, remainingColors.length-1)] )
     }
@@ -111,6 +113,7 @@ newRound = function(cb){
     var end = begin + game.colors.length * timePerColor + endTimeBuffer;
     game.end = end;
 
+    roundTime = timePerColor * stack + endTimeBuffer;
     // game.title = ""
 
     game.state = "prep"; // DEBUG: Make prep first in prod
