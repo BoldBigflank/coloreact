@@ -2,11 +2,25 @@
 var socket = io.connect();
 console.log("socket is defined");
 var game = {};
+var playerId;
+var playerPosition;
+var playerScore;
+var scoreDiff;
+var topScore = 0;
+var playerSpread;
 var timestamp_diff = null;
 
 var Player = React.createClass({
 	render: function(){
 		var classes=""
+		if(this.props.count == 1) topScore = this.props.player.score;
+		if(playerId == this.props.player.id){
+			// Update player specific stuff
+			playerScore = this.props.player.score;
+			$(".playerScore").html(playerScore)
+			$(".playerPosition").html(this.props.count)
+			$(".playerSpread").html("+" + ( topScore - playerScore ) )
+		}
 		if(this.props.gameState == "active" && this.props.player.answer != null)
 			classes="warning"
 		if(this.props.gameState == "ended" && this.props.player.answer )
@@ -68,12 +82,11 @@ var GameComponent = React.createClass({
 		var players = this.state.players.map(function(player) {
 			return (<Player 
 				player={player} 
+
 				gameState={self.state.state} 
 				winner = {self.state.winner}
 				count={++count}/>);
 		})
-
-		var next = (this.state.state == 'ended') ? <button id="begin-btn" class="btn btn-large btn-primary">Next</button> : <button id="begin-btn" class="btn btn-large btn-primary" style={{display:'none'}}>Next</button>;
 
 		if(this.state.state == 'prep') this.state.alert = null;
 		var alert =  (this.state.alert) ? <div class="alert clickInfo"> {this.state.alert}</div> : "";
@@ -85,9 +98,7 @@ var GameComponent = React.createClass({
 		} else {
 			percent = 0;
 		}
-		var barStyle = {width:percent + "%"};
-
-		var hideAnswers = (this.state.state != 'active') ? {display:'none'}:{};
+		
 		var currentColorIndex = parseInt((timestamp - this.state.begin) / this.state.timePerColor);
 		if(currentColorIndex >= this.state.colors.length) currentColorIndex = this.state.colors.length-1;
 		if(currentColorIndex < 0) currentColorIndex = 0;
@@ -149,11 +160,11 @@ var GameComponent = React.createClass({
 
 // The clock
 setInterval(function() {
-        React.renderComponent(
-          GameComponent({timestamp: new Date().getTime()}),
-          document.getElementById('question-panel')
-        );
-      }, 50);
+    React.renderComponent(
+      GameComponent({timestamp: new Date().getTime()}),
+      document.getElementById('question-panel')
+    );
+  }, 50);
 
 (function($, undefined){
   $(document).ready(function(){
@@ -163,6 +174,7 @@ setInterval(function() {
     socket.emit('join', function(playerObj){
     	console.log("emitted join", playerObj)
     	$(".username").text(playerObj.name)
+    	playerId = playerObj.id;
     });
     
     $('.colorButton').mousedown(function(){ // Buzz in
