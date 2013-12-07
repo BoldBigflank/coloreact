@@ -7,9 +7,9 @@ exports.eventEmitter = new EventEmitter();
 
 var prepTime = 1 * 1000;
 var roundTime;
-var timePerColor = 80;
-var minColors = 40;
-var maxColors = 200;
+var timePerColor = 160;
+var minColors = 20;
+var maxColors = 100;
 var endTimeBuffer = 3000;
 
 var game = {
@@ -232,9 +232,11 @@ exports.setState = function(state, cb){
 }
 
 exports.addAnswer = function(uuid, time, cb){
-    if(game.state != "active") return cb("Not accepting answers");
+    if(game.state != "active") return cb("Start a round by clicking the logo");
 
     var player = _.find(game.players, function(player){ return player.id == uuid })
+    if(!player) return cb("Please refresh your browser");
+    
     console.log("Player answer", time, player.answer)
     if(player.answer != null) return cb("You have already answered.")
     player.answer = time;
@@ -249,7 +251,7 @@ exports.addAnswer = function(uuid, time, cb){
         }
         return cb("You answered in " + time + "ms.  You are currently winning!", {players: game.players});
     } else {
-        return cb("You answered in " + time + "ms.  You are too slow!");
+        return cb("You answered in " + time + "ms.  First place is " + game.winner.time + "ms.");
     }
 }
 

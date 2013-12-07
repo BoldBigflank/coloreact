@@ -76,7 +76,7 @@ var GameComponent = React.createClass({
 		var next = (this.state.state == 'ended') ? <button id="begin-btn" class="btn btn-large btn-primary">Next</button> : <button id="begin-btn" class="btn btn-large btn-primary" style={{display:'none'}}>Next</button>;
 
 		if(this.state.state == 'prep') this.state.alert = null;
-		var alert =  (this.state.alert) ? <div class="alert alert-dismissable alert-danger"> {this.state.alert}</div> : "";
+		var alert =  (this.state.alert) ? <div class="alert clickInfo"> {this.state.alert}</div> : "";
 		var timestamp = new Date().getTime();
 		if(timestamp_diff == null) timestamp_diff = timestamp - this.state.now;
 		if(timestamp < this.state.end){
@@ -122,12 +122,13 @@ var GameComponent = React.createClass({
 						<h1>
 							Round {this.state.round}
 						</h1>
-						{alert}
+						
 						<div class="colorHolder">
 							<div class="correctColorDiv" style={{background: correctColor}}>
 								<div class="colorButton">
 								<img src={colorFile}></img>
 								</div>
+								{alert}
 							</div>
 						</div>
 					</div>

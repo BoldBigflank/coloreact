@@ -93,5 +93,14 @@ padding:10px 15px;
 	margin:0px auto;
 	padding-top:264px;
 
+}
 
+.clickInfo{
+	margin-top: 300px;
+	background: none;
+	border: none;
+	color: white;
+	font-size: 44px;
+	font-weight: bold;
+	padding:25px;
 }
