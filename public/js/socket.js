@@ -58,6 +58,13 @@ var GameComponent = React.createClass({
 	render: function(){
 		var self = this
 		var count = 0
+		var colorFiles = {
+			"#F28019":"orange.png",
+			"#32AA3A":"green.png",
+			"#299ADA":"blue.png",
+			"#B11322":"red.png",
+			"#7F0F7D":"purple.png"
+		}
 		var players = this.state.players.map(function(player) {
 			return (<Player 
 				player={player} 
@@ -87,7 +94,7 @@ var GameComponent = React.createClass({
 		var currentColor = this.state.colors[currentColorIndex];
 		var correctColor = this.state.colors[this.state.colors.length-1];
 
-		var colorFile = "orange.png";
+		var colorFile = colorFiles[currentColor];
 
 		var info = (this.state.state != 'ended') ? <div class="div-info alert alert-info">Begin: {this.state.begin} End: {this.state.end} Length: {this.state.colors.length} </div> : "";
 		

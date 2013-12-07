@@ -5,7 +5,7 @@ var EventEmitter = require('events').EventEmitter;
 
 exports.eventEmitter = new EventEmitter();
 
-var prepTime = 2 * 1000;
+var prepTime = 1 * 1000;
 var roundTime;
 var timePerColor = 80;
 var minColors = 40;
