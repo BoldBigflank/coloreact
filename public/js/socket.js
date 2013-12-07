@@ -166,6 +166,17 @@ setInterval(function() {
     );
   }, 50);
 
+function click_sound(){
+    var audio = document.createElement("audio");
+    audio.src = "explode.wav";
+    audio.addEventListener("ended", function () {
+        document.removeChild(this);
+    }, false);
+    audio.play();   
+}
+
+
+
 (function($, undefined){
   $(document).ready(function(){
   	React.renderComponent(<GameComponent />, $("#question-panel")[0]);
@@ -180,6 +191,7 @@ setInterval(function() {
     $('.colorButton').mousedown(function(){ // Buzz in
 		var val = $('#answer-time').val();
     	console.log("answering", val)
+    	click_sound();
 		if(val !== ''){
 			// console.log('test');
 			socket.emit('answer', val);
