@@ -218,6 +218,18 @@ function click_sound(){
     	return false;
     });
 
+    $(".musicToggle").click(function(){
+    	var m = document.getElementById('music');
+    	if(m.paused){
+    	 m.play();
+    	 $(".musicToggle").html("<span class='glyphicon glyphicon-volume-up'></span>")
+    	}
+    	else{
+    	 m.pause();
+    	 $(".musicToggle").html("<span class='glyphicon glyphicon-volume-off'></span>")
+    	}
+    })
+
   });
 
 })(jQuery);

@@ -27,10 +27,8 @@
 </head>
   
   <body>
-    <source src="music.wav">
-      <source src="explode.wav">
-    <embed src="music.wav" id="sound1" name="sound1" autostart="true" loop="false" hidden="true"   ></embed>
-    <embed src="explode.wav" id="sound2" name="sound2" autostart="true" loop="false" hidden="true"   ></embed>
+    <audio id="music" preload autoplay src="music.wav">
+    </audio>
     <div class="navbar navbar-default navbar-fixed-top">
       <div class="navbar-inner">
           <a class="btn titleButton" href="#">COLOREACTOR</a>
@@ -43,12 +41,20 @@
         
       </div>
     </div>
+    <nav class="hidden-lg hidden-md navbar navbar-default navbar-fixed-bottom" role="navigation">
+      <div class="musicToggle btn">
+        <span class="glyphicon glyphicon-volume-up"></span>
+      </div>
+      
+    </nav>
     <div class="container-fluid">
       <!--/row-->
-      <div id="question-panel" class="row-fluid">
+      <div id="question-panel" class="btn row-fluid">
+
         
       </div>
     </div>
+
     <!--/.fluid-container-->
     <script src="js/bootstrap.min.js">
     </script>
