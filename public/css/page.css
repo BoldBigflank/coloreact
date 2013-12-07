@@ -1,7 +1,11 @@
+
 body {
-  padding-top: 60px;
+  padding-top: 85px;
   padding-bottom: 40px;
   font-size: 36px;
+  background-image: url("../bg.png");
+  background-size:100%;  
+  
 }
 .sidebar-nav {
   padding: 9px 0;
@@ -70,4 +74,24 @@ body {
 background-color: #1A572A;
 border-color: #869D34;
 padding:10px 15px;
+}
+
+.colorHolder{
+	text-align:center;
+}
+
+.correctColorDiv{
+	border-radius:20px;
+	margin:auto;
+	width:650px;
+	height:900px;
+}
+
+.colorButton{
+	width:372px;
+	height:372px;
+	margin:0px auto;
+	padding-top:264px;
+
+
 }

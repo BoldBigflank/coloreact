@@ -26,7 +26,7 @@ var game = {
 } // prep, active, ended
 
 var names
-var colorsArray = ["#00F", "#0F0", "#0FF", "#F00", "#F0F", "#FF0", "#FF0"];
+var colorsArray = ["#F28019", "#32AA3A", "#299ADA", "#B11322", "#7F0F7D"];
 
 var init = function(cb){
     game = {

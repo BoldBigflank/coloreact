@@ -87,6 +87,8 @@ var GameComponent = React.createClass({
 		var currentColor = this.state.colors[currentColorIndex];
 		var correctColor = this.state.colors[this.state.colors.length-1];
 
+		var colorFile = "orange.png";
+
 		var info = (this.state.state != 'ended') ? <div class="div-info alert alert-info">Begin: {this.state.begin} End: {this.state.end} Length: {this.state.colors.length} </div> : "";
 		
 		var diff = timestamp - (this.state.begin + ((this.state.colors.length-1) * this.state.timePerColor )) ;
@@ -109,26 +111,21 @@ var GameComponent = React.createClass({
 				  </table>
 				</div>
 				<div class="col-md-9">
-					<div class="jumbotron">
+					<div class="">
 						<h1>
 							Round {this.state.round}
 						</h1>
-						<p class="title">
-							Match this color {this.state.colors[this.state.colors.length-1]}
-						</p>
-						<div style={{background: correctColor, width:200, height:200}}></div>
-						<div style={{background: currentColor, width:200, height:200}}></div>
-						{next}
+						{alert}
+						<div class="colorHolder">
+							<div class="correctColorDiv" style={{background: correctColor}}>
+								<div class="colorButton">
+								<img src={colorFile}></img>
+								</div>
+							</div>
+						</div>
 					</div>
 					
-					
-					{info}
-					{alert}
-					
-					<div class="answers" style={hideAnswers}>
-						<a class="btn btn-block btn-large btn-primary answer-btn">NOW</a>
-						<input id="answer-time" type="hidden" value={diff}></input>
-					</div>
+					<input id="answer-time" type="hidden" value={diff}></input>
 				</div>
 			</div>
         );
@@ -160,7 +157,7 @@ setInterval(function() {
     	$(".username").text(playerObj.name)
     });
     
-    $('.answer-btn').mousedown(function(){
+    $('.colorButton').mousedown(function(){ // Buzz in
 		var val = $('#answer-time').val();
     	console.log("answering", val)
 		if(val !== ''){
@@ -181,7 +178,7 @@ setInterval(function() {
       	}
     });
 
-    $("#begin-btn").click(function(){
+    $(".titleButton").click(function(){ // Start new round
     	console.log("click")
     	socket.emit("state", "prep", function(err, res){
 
