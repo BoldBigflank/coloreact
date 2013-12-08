@@ -112,7 +112,7 @@ var GameComponent = React.createClass({
 		var diff = timestamp - (this.state.begin + ((this.state.colors.length-1) * this.state.timePerColor )) ;
 
 		return (
-			<div class="row">
+			<div class="row" style={{margin:0}}>
 				<div id="leaderboard_container" class="container col-md-3 hidden-sm hidden-xs">
 				  <span><h4>Leaderboard</h4></span>
 				  <table class="leaders table table-striped">
