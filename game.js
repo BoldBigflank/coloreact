@@ -20,7 +20,7 @@ var game = {
     , begin:null
     , end:null
     , now:null
-    , colors:["#FFF"]
+    , colors:["#32AA3A"]
     , winner:{}
     , count:null
 } // prep, active, ended
@@ -32,7 +32,7 @@ var init = function(cb){
     game = {
         title:null
         , round:0
-        , colors:["#FFF"]
+        , colors:["rgba(50, 170, 58, 0.5)"]
         , state:"ended"
         , players:[]
         , begin:null
@@ -236,7 +236,7 @@ exports.addAnswer = function(uuid, time, cb){
 
     var player = _.find(game.players, function(player){ return player.id == uuid })
     if(!player) return cb("Please refresh your browser");
-    
+
     console.log("Player answer", time, player.answer)
     if(player.answer != null) return cb("You have already answered.")
     player.answer = time;

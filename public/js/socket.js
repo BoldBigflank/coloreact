@@ -130,10 +130,6 @@ var GameComponent = React.createClass({
 				</div>
 				<div class="col-md-9">
 					<div class="">
-						<h1>
-							Round {this.state.round}
-						</h1>
-						
 						<div class="colorHolder">
 							<div class="correctColorDiv" style={{background: correctColor}}>
 								<div class="colorButton">
