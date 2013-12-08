@@ -235,7 +235,7 @@ exports.addAnswer = function(uuid, time, cb){
     if(game.state != "active") return cb("Start a round by clicking the logo");
 
     var player = _.find(game.players, function(player){ return player.id == uuid })
-    if(!player) return cb("Please refresh your browser");
+    if(!player) return cb("Please restart your game.");
 
     console.log("Player answer", time, player.answer)
     if(player.answer != null) return cb("You have already answered.")
