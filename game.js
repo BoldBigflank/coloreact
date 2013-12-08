@@ -8,8 +8,8 @@ exports.eventEmitter = new EventEmitter();
 var prepTime = 1 * 1000;
 var roundTime;
 var timePerColor = 160;
-var minColors = 20;
-var maxColors = 100;
+var minColors = 10;
+var maxColors = 90;
 var endTimeBuffer = 3000;
 
 var game = {
