@@ -133,7 +133,11 @@ var GameComponent = React.createClass({
 						<div class="colorHolder">
 							<div class="correctColorDiv" style={{background: correctColor}}>
 								<div class="colorButton">
-								<img src={colorFile}></img>
+								<img src="orange.png" style={{display: (colorFile == "orange.png") ? "" : "none"}}></img>
+								<img src="green.png" style={{display: (colorFile == "green.png") ? "" : "none"}}></img>
+								<img src="blue.png" style={{display: (colorFile == "blue.png") ? "" : "none"}}></img>
+								<img src="red.png" style={{display: (colorFile == "red.png") ? "" : "none"}}></img>
+								<img src="purple.png" style={{display: (colorFile == "purple.png") ? "" : "none"}}></img>
 								</div>
 								{alert}
 							</div>
